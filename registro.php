@@ -1,5 +1,5 @@
 <?php
-require "db.php";
+require "conexion.php";
 $mensaje = "";
 
 if ($_POST) {
@@ -19,11 +19,11 @@ if ($_POST) {
     } elseif ($pass !== $confirmar) {
         $mensaje = "Las contraseñas no coinciden.";
     } else {
-        $sql = "INSERT INTO usuarios (nombre, apellidos, correo, contraseña)
+        $sql = "INSERT INTO usuario (nombre, apellidos, correo, contraseña)
                 VALUES ('$nombre', '$apellidos', '$correo', '$pass')";
 
         if ($conexion->query($sql)) {
-            $mensaje = "Usuario registrado correctamente.";
+            $mensaje = "usuario registrado correctamente.";
         } else {
             $mensaje = "Error: Correo ya registrado.";
         }
@@ -36,47 +36,68 @@ if ($_POST) {
 <head>
     <meta charset="UTF-8">
     <title>Registro</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="bg-light">
 
-<header class="header">
-    <h1>Registro</h1>
-    <nav>
-        <a href="index.php">Inicio</a>
-        <a href="registro.php">Registro</a>
-        <a href="login.php">Inicio de sesión</a>
-    </nav>
+<header class="bg-primary text-white py-3 mb-4">
+    <div class="container d-flex justify-content-between align-items-center">
+        <h1 class="h3 m-0">Registro</h1>
+        <nav>
+            <a href="index.php" class="text-white me-3 text-decoration-none">Inicio</a>
+            <a href="registro.php" class="text-white me-3 text-decoration-none">Registro</a>
+            <a href="login.php" class="text-white text-decoration-none">Inicio de sesión</a>
+        </nav>
+    </div>
 </header>
 
-<h2>Formulario de Registro</h2>
+<div class="container">
+    <h2 class="mb-4 text-center">Formulario de Registro</h2>
 
-<form method="POST" class="form">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 500px;">
+        <form method="POST">
 
-    <label>Nombre  
-        <input type="text" name="nombre" required>
-    </label>
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" name="nombre" class="form-control" required>
+            </div>
 
-    <label>Apellidos  
-        <input type="text" name="apellidos" required>
-    </label>
+            <div class="mb-3">
+                <label class="form-label">Apellidos</label>
+                <input type="text" name="apellidos" class="form-control" required>
+            </div>
 
-    <label>Correo  
-        <input type="email" name="correo" required>
-    </label>
+            <div class="mb-3">
+                <label class="form-label">Correo</label>
+                <input type="email" name="correo" class="form-control" required>
+            </div>
 
-    <label>Contraseña  
-        <input type="password" name="contraseña" required minlength="6">
-    </label>
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" name="contraseña" class="form-control" required minlength="6">
+            </div>
 
-    <label>Confirmar Contraseña  
-        <input type="password" name="confirmar" required minlength="6">
-    </label>
+            <div class="mb-3">
+                <label class="form-label">Confirmar Contraseña</label>
+                <input type="password" name="confirmar" class="form-control" required minlength="6">
+            </div>
 
-    <button type="submit">Registrar</button>
+            <button type="submit" class="btn btn-primary w-100">Registrar</button>
 
-    <p class="mensaje"><?= $mensaje ?></p>
-</form>
+            <p class="text-center mt-3 text-danger fw-semibold">
+                <?= $mensaje ?>
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
+
